@@ -1,0 +1,265 @@
+#:import utils kivy.utils
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDIcon kivymd.uix.label.MDIcon
+#:import MDToolbar kivymd.uix.toolbar.MDToolbar
+#:import MDToolbar kivymd.uix.toolbar.MDToolbar
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
+#:import MDFillRoundFlatIconButton kivymd.uix.button.MDFillRoundFlatIconButton
+#:import SwapTransition kivy.uix.screenmanager.SwapTransition
+
+WindowManager:
+    MainWindow:
+    AuthorInfo:
+
+
+<MainWindow>:
+    name: 'main'
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDToolbar:
+            md_bg_color : .2, .2, .2, 1
+            specific_text_color: 1, 1, 1, 1
+            title: 'Pizza Profitability Calculator'
+            right_action_items: [["account", lambda x: app.go_author()]]
+
+        FloatLayout:
+
+            Label:
+                pos_hint: {'center_y':0.97}
+                halign: 'center'
+                text: "Enter details about pizza's sets:"
+                size: self.texture_size
+                font_size: '17dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Image:
+                id: one
+                source: 'morepizzas.png'
+                pos_hint: {'x':0.05, 'top':1}
+                size_hint: 0, 0
+
+            Image:
+                id: two
+                source: '2pizzas.png'
+                pos_hint: {'x':0.62, 'top':1}
+                size_hint: 0, 0
+
+            MDTextField:
+                id: quan1
+                hint_text: 'Quantity'
+                pos_hint: {'center_x':0.2, 'center_y':0.7}
+                size_hint: 0.35, 0.1
+                multiline: False
+                font_size: 12
+                color: utils.get_color_from_hex('#ce4b4b')
+                background_normal: ''
+                background_color: utils.get_color_from_hex('#f2bd41')
+                foreground_color: utils.get_color_from_hex('#69a65e')
+                on_focus:
+                    root.change_pic1()
+
+            MDTextField:
+                id: size1
+                hint_text: 'Diameter in cm'
+                pos_hint: {'center_x':0.2, 'center_y':0.6}
+                size_hint: 0.35, 0.1
+                multiline: False
+                font_size: 12
+                background_normal: ''
+                background_color: utils.get_color_from_hex('#f2bd41')
+                foreground_color: utils.get_color_from_hex('#69a65e')
+
+            MDTextField:
+                id: price1
+                hint_text: 'Price per pizza'
+                pos_hint: {'center_x':0.2, 'center_y':0.5}
+                size_hint: 0.35, 0.1
+                multiline: False
+                font_size: 12
+                background_normal: ''
+                background_color: utils.get_color_from_hex('#f2bd41')
+                foreground_color: utils.get_color_from_hex('#69a65e')
+
+            MDTextField:
+                id: quan2
+                hint_text: 'Quantity'
+                pos_hint: {'center_x':0.78, 'center_y':0.7}
+                size_hint: 0.35, 0.1
+                multiline: False
+                font_size: 12
+                background_normal: ''
+                background_color: utils.get_color_from_hex('#f2bd41')
+                foreground_color: utils.get_color_from_hex('#69a65e')
+                on_focus:
+                    root.change_pic2()
+
+            MDTextField:
+                id: size2
+                hint_text: 'Diameter in cm'
+                pos_hint: {'center_x':0.78, 'center_y':0.6}
+                size_hint: 0.35, 0.1
+                multiline: False
+                font_size: 12
+                background_normal: ''
+                background_color: utils.get_color_from_hex('#f2bd41')
+                foreground_color: utils.get_color_from_hex('#69a65e')
+
+            MDTextField:
+                id: price2
+                hint_text: 'Price per pizza'
+                pos_hint: {'center_x':0.78, 'center_y':0.5}
+                size_hint: 0.35, 0.1
+                multiline: False
+                font_size: 12
+                background_normal: ''
+                background_color: utils.get_color_from_hex('#f2bd41')
+                foreground_color: utils.get_color_from_hex('#69a65e')
+
+            MDRoundFlatButton:
+                theme_text_color: 'Custom'
+                pos_hint: {'x':0.25, 'top':0.15}
+                text: 'Clear'
+                size_hint: 0.5, 0.085
+                text_color: utils.get_color_from_hex('#ce4b4b')
+                font_size: '25dp'
+                font_name: 'RobotoMono-Regular'
+                bold: True
+                on_release:
+                    root.clear_inputs()
+
+            MDFillRoundFlatIconButton:
+                pos_hint: {'center_x':0.5, 'center_y':0.4}
+                icon: "calculator"
+                text: 'Calculate'
+                md_bg_color: app.theme_cls.primary_light
+                font_name: 'RobotoMono-Regular'
+                bold: True
+                text_color: utils.get_color_from_hex('#ce4b4b')
+                bold: True
+                on_release:
+                    root.calculate()
+
+            MDLabel:
+                id: tarea
+                pos_hint: {'center_y':0.3}
+                halign: 'center'
+                text: ":Total area:"
+                size: self.texture_size
+                font_size: '0dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Label:
+                id: tprice
+                pos_hint: {'center_y':0.2}
+                halign: 'center'
+                text: ":Total price:"
+                size: self.texture_size
+                font_size: '0dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Label:
+                id: tprice1
+                pos_hint: {'center_x':0.15, 'center_y':0.2}
+                size: self.texture_size
+                font_size: '16dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Label:
+                id: tprice2
+                pos_hint: {'center_x':0.85, 'center_y':0.2}
+                size: self.texture_size
+                font_size: '16dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Label:
+                id: tarea1
+                pos_hint: {'center_x':0.15, 'center_y':0.3}
+                size: self.texture_size
+                font_size: '16dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Label:
+                id: tarea2
+
+                pos_hint: {'center_x':0.85, 'center_y':0.3}
+                size: self.texture_size
+                font_size: '16dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+<AuthorInfo>:
+    name: 'author'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDToolbar:
+            md_bg_color : .2, .2, .2, 1
+            specific_text_color: 1, 1, 1, 1
+            title: 'About author'
+            right_action_items: [["pizza", lambda x: app.go_main()]]
+
+        FloatLayout:
+
+            Label:
+                pos_hint: {'center_y':0.9}
+                halign: 'center'
+                text: "Find more of my projects"
+                size: self.texture_size
+                font_size: '24dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Label:
+                pos_hint: {'center_y':0.8}
+                halign: 'center'
+                text: "and"
+                size: self.texture_size
+                font_size: '24dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Label:
+                pos_hint: {'center_y':0.7}
+                halign: 'center'
+                text: "my blog on:"
+                size: self.texture_size
+                font_size: '24dp'
+                bold: True
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#69a65e')
+
+            Label:
+                pos_hint: {'center_y':0.5}
+                halign: 'center'
+                markup: True
+                text: "[b][u][ref=link]marcin.majeran.com[/ref][/u][/b]"
+                on_ref_press:
+                    app.link()
+                size: self.texture_size
+                font_size: '32dp'
+                font_name: 'RobotoMono-Regular'
+                color: utils.get_color_from_hex('#8140b3')
+
+            Image:
+                id: one
+                source: 'bulb.png'
+                pos_hint: {'center_x':0.5, 'center_y':0.25}
+                size_hint: None, None
